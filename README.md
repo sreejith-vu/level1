@@ -1,7 +1,7 @@
 #### Step 1:
 Creaing the cluster with name dc2
 
-gcloud container clusters create dc2 --enable-autorepair --enable-autoupgrade --enable-cloud-logging --max-nodes=3 --min-nodes=2 --machine-type=custom-1-1024
+```gcloud container clusters create dc2 --enable-autorepair --enable-autoupgrade --enable-cloud-logging --max-nodes=3 --min-nodes=2 --machine-type=custom-1-1024```
 
 #### Step 2:
 Iam familiar with helm so i have installed nginx controller with helm.
