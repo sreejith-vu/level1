@@ -15,6 +15,8 @@ helm install --name nginx-ingress stable/nginx-ingress --set rbac.create=true --
 
 #### Step 3:
 Created namespaces staging and production
+kubectl create ns staging
+kubectl create ns production
 
 #### Step 4: 
 Deployed guestbook application in staging. Modified frontend deployment yaml file to create single replica.
@@ -30,7 +32,7 @@ To test pod scaling i have created a kind:Pod yaml which will send multiple requ
 YAML - load-generator.yaml
 
 As the requests started triggering CPU usage got increased and pods started scaling.
-I have reduced the CPU limit by kubectl edit hpa -n staging and set it to 10% for immediate result.
+I have reduced the CPU limit by `kubectl edit hpa -n staging` and set it to 10% for immediate result.
 
 
 
