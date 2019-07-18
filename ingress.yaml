@@ -9,7 +9,7 @@ spec:
  - host: staging-guestbook.mstakx.io
    http:
      paths:
-     - path: /*
+     - path: /
        backend:
          serviceName: frontend
          servicePort: 80
