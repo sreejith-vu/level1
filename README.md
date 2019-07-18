@@ -52,6 +52,8 @@ kubectl apply -f guestbook/frontend-deployment.yaml -n production
 kubectl apply -f guestbook/frontend-production-service.yaml -n production
 kubectl apply -f production-guestbook-ingress.yaml -n production
 
+kubectl autoscale deployment frontend --cpu-percent=20 --min=1 --max=10 -n staging
+
 kubectl apply -f load-generator/load-generator.yaml -n production
 kubectl apply -f load-generator/load-generator-2.yaml -n production
 
