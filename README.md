@@ -83,8 +83,8 @@ kubectl apply -f load-generator/load-generator.yaml -n staging
 ```
 
 Demonstration of autoscaling is written as script.
-* For production - hba_prod_demostrate.sh
-* For Staging -hba_stg_demostrate.sh
+* For production - hba_prod_demonstrate.sh
+* For Staging -hba_stg_demonstrate.sh
 
 Below is also a summary or logic of script.
 
