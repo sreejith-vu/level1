@@ -26,9 +26,9 @@ Deployed guestbook application in staging. Modified frontend deployment yaml fil
 
 #### Step 5: 
 Enabled horizontal pod autoscaling on frontend deployment.
-On reaching 50% CPU, pod will scale to maximum 10 nodes.
+On reaching 10% CPU(for testing purpose only i have given this), pod will scale to maximum 10 nodes.
 ```
-kubectl autoscale deployment frontend --cpu-percent=50 --min=1 --max=10 -n staging
+kubectl autoscale deployment frontend --cpu-percent=10 --min=1 --max=10 -n staging
 ```
 #### Step 6: 
 To test pod scaling i have created a kind:Pod yaml which will send multiple requests to the loadbalancer.
@@ -52,8 +52,23 @@ kubectl apply -f guestbook/frontend-deployment.yaml -n production
 kubectl apply -f guestbook/frontend-production-service.yaml -n production
 kubectl apply -f production-guestbook-ingress.yaml -n production
 
-kubectl autoscale deployment frontend --cpu-percent=20 --min=1 --max=10 -n staging
+kubectl autoscale deployment frontend --cpu-percent=10 --min=1 --max=10 -n production
 
 kubectl apply -f load-generator/load-generator.yaml -n production
-kubectl apply -f load-generator/load-generator-2.yaml -n production
+```
+
+Commands Staging:
+```
+kubectl apply -f guestbook/redis-master-deployment.yaml -n staging
+kubectl apply -f guestbook/redis-master-service.yaml -n staging
+kubectl apply -f guestbook/redis-slave-deployment.yaml -n staging
+kubectl apply -f guestbook/redis-slave-service.yaml -n staging
+kubectl apply -f guestbook/frontend-deployment.yaml -n staging
+
+kubectl apply -f guestbook/frontend-staging-service.yaml -n staging
+kubectl apply -f staging-guestbook-ingress.yaml -n staging
+
+kubectl autoscale deployment frontend --cpu-percent=10 --min=1 --max=10 -n staging
+
+kubectl apply -f load-generator/load-generator.yaml -n staging
 ```
