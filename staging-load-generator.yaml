@@ -7,4 +7,4 @@ spec:
   - name: load-generator
     image: ubuntu:latest
     command: [ "/bin/bash", "-c", "--" ]
-    args: [ 'apt-get update; apt-get install -y wget && while true; do wget -q -O- http://xx.xx.xx.xx/; done' ]
+    args: [ 'apt-get update; apt-get install -y wget && while true; do wget -q -O- http://LB_IP/; done' ]
