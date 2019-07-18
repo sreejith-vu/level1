@@ -73,7 +73,12 @@ kubectl autoscale deployment frontend --cpu-percent=10 --min=1 --max=10 -n stagi
 kubectl apply -f load-generator/load-generator.yaml -n staging
 ```
 
-All tasks in single script.
+Demonstration of autoscaling is written as script.
+For production - hba_prod_demostrate.sh
+For Staging -hba_stg_demostrate.sh
+
+Below is also a summary or logic of script.
+
 ```
 kubectl apply -f guestbook/redis-master-deployment.yaml -n staging
 kubectl apply -f guestbook/redis-master-service.yaml -n staging
