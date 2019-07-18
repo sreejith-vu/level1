@@ -42,7 +42,7 @@ I have reduced the CPU limit by `kubectl edit hpa -n staging` and set it to 10% 
 Similarly I have configured production environment
 
 Commands Production:
-
+```
 kubectl apply -f guestbook/redis-master-deployment.yaml -n production
 kubectl apply -f guestbook/redis-master-service.yaml -n production
 kubectl apply -f guestbook/redis-slave-deployment.yaml -n production
@@ -56,4 +56,4 @@ kubectl autoscale deployment frontend --cpu-percent=20 --min=1 --max=10 -n stagi
 
 kubectl apply -f load-generator/load-generator.yaml -n production
 kubectl apply -f load-generator/load-generator-2.yaml -n production
-
+```
