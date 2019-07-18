@@ -33,9 +33,22 @@ kubectl autoscale deployment frontend --cpu-percent=50 --min=1 --max=10 -n stagi
 #### Step 6: 
 To test pod scaling i have created a kind:Pod yaml which will send multiple requests to the loadbalancer.
 YAML - load-generator.yaml
-
+```
+kubectl apply -f load-generator.yaml -n staging
+```
 As the requests started triggering CPU usage got increased and pods started scaling.
 I have reduced the CPU limit by `kubectl edit hpa -n staging` and set it to 10% for immediate result.
+
+Similarly I have configured production environment
+
+kubectl apply -f guestbook/redis-master-deployment.yaml -n production
+kubectl apply -f guestbook/redis-master-service.yaml -n production
+kubectl apply -f guestbook/redis-slave-deployment.yaml -n production
+kubectl apply -f guestbook/redis-slave-service.yaml -n production
+kubectl apply -f guestbook/frontend-deployment.yaml -n production
+kubectl apply -f guestbook/frontend-service.yaml -n production
+
+kubectl apply -f load-generator/load-generator.yaml -n production
 
 
 
