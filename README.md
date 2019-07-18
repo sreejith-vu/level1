@@ -72,3 +72,42 @@ kubectl autoscale deployment frontend --cpu-percent=10 --min=1 --max=10 -n stagi
 
 kubectl apply -f load-generator/load-generator.yaml -n staging
 ```
+
+All tasks in single script.
+
+kubectl apply -f guestbook/redis-master-deployment.yaml -n staging
+kubectl apply -f guestbook/redis-master-service.yaml -n staging
+kubectl apply -f guestbook/redis-slave-deployment.yaml -n staging
+kubectl apply -f guestbook/redis-slave-service.yaml -n staging
+kubectl apply -f guestbook/frontend-deployment.yaml -n staging
+
+kubectl apply -f guestbook/frontend-staging-service.yaml -n staging
+kubectl apply -f staging-guestbook-ingress.yaml -n staging
+
+kubectl autoscale deployment frontend --cpu-percent=10 --min=1 --max=10 -n staging
+
+STG_LB_PUB_IP=$(kubectl get svc -n staging |grep LoadBalancer |awk '{print $4}')
+
+echo $STG_LB_PUB_IP
+
+sed -i "" "s/LB_IP/$STG_LB_PUB_IP/g" load-generator/staging-load-generator.yaml
+
+kubectl apply -f load-generator/staging-load-generator.yaml -n staging
+
+
+kubectl apply -f guestbook/redis-master-deployment.yaml -n staging
+kubectl apply -f guestbook/redis-master-service.yaml -n staging
+kubectl apply -f guestbook/redis-slave-deployment.yaml -n staging
+kubectl apply -f guestbook/redis-slave-service.yaml -n staging
+kubectl apply -f guestbook/frontend-deployment.yaml -n staging
+
+kubectl apply -f guestbook/frontend-staging-service.yaml -n staging
+kubectl apply -f staging-guestbook-ingress.yaml -n staging
+
+kubectl autoscale deployment frontend --cpu-percent=10 --min=1 --max=10 -n staging
+
+PROD_LB_PUB_IP=$(kubectl get svc -n production |grep LoadBalancer |awk '{print $4}')
+
+sed -i "" "s/LB_IP/$PROD_LB_PUB_IP/g" load-generator/production-load-generator.yaml
+
+kubectl apply -f load-generator/production-load-generator.yaml -n staging
