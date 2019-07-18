@@ -41,14 +41,17 @@ I have reduced the CPU limit by `kubectl edit hpa -n staging` and set it to 10% 
 
 Similarly I have configured production environment
 
+Commands Production:
+
 kubectl apply -f guestbook/redis-master-deployment.yaml -n production
 kubectl apply -f guestbook/redis-master-service.yaml -n production
 kubectl apply -f guestbook/redis-slave-deployment.yaml -n production
 kubectl apply -f guestbook/redis-slave-service.yaml -n production
 kubectl apply -f guestbook/frontend-deployment.yaml -n production
-kubectl apply -f guestbook/frontend-service.yaml -n production
+
+kubectl apply -f guestbook/frontend-production-service.yaml -n production
+kubectl apply -f production-guestbook-ingress.yaml -n production
 
 kubectl apply -f load-generator/load-generator.yaml -n production
-
-
+kubectl apply -f load-generator/load-generator-2.yaml -n production
 
