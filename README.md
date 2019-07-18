@@ -39,6 +39,12 @@ kubectl apply -f load-generator.yaml -n staging
 As the requests started triggering CPU usage got increased and pods started scaling.
 I have reduced the CPU limit by `kubectl edit hpa -n staging` and set it to 10% for immediate result.
 
+#### Step 7: 
+I have also created nginx ingress and added external ip to system hosts file and tried loading the URL and it is working fine.
+```
+kubectl apply -f staging-guestbook-ingress.yaml -n staging
+```
+
 Similarly I have configured production environment
 
 Commands Production:
