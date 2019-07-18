@@ -94,6 +94,47 @@ sed -i "" "s/LB_IP/$STG_LB_PUB_IP/g" load-generator/staging-load-generator.yaml
 
 kubectl apply -f load-generator/staging-load-generator.yaml -n staging
 
+kubectl get hpa -n staging
+echo "Waiting for pod scaling"
+
+REPLICA=$(kubectl get hpa -n staging |grep frontend |awk '{print $6}')
+while [[ $REPLICA -le 3 ]]
+do
+  kubectl get hpa -n staging
+  kubectl get pods -n staging
+  if [[ $REPLICA -ge 2 ]]
+  then
+    echo "Pod started scaling on staging namespace"
+    kubectl get hpa -n staging
+  fi
+  echo "Next check after 10 sec"
+  sleep 10
+done
+echo "Pod scaled successfully. Terminating load generator to reduce load"
+
+kubectl delete -f load-generator/staging-load-generator.yaml -n staging
+if [[ $? -eq 0 ]]
+then
+  echo "Deleted load generator"
+else
+  echo "Error while deleting pod/yaml"
+fi
+
+while [[ $REPLICA -ge 1 ]]
+do
+  echo "Waiting for pod to scale down"
+  kubectl get hpa -n staging
+  kubectl get pods -n staging
+  if [[ $REPLICA -eq 1  ]]
+  then
+    kubectl get hpa -n staging
+    echo "Terminated pods as load is normal. Exiting from scipt"
+    exit 0
+  fi
+  echo "Next check after 10 sec"
+  sleep 10
+done
+
 
 kubectl apply -f guestbook/redis-master-deployment.yaml -n staging
 kubectl apply -f guestbook/redis-master-service.yaml -n staging
