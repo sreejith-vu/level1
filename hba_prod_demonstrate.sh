@@ -13,6 +13,18 @@ kubectl autoscale deployment frontend --cpu-percent=10 --min=1 --max=10 -n produ
 
 PROD_LB_PUB_IP=$(kubectl get svc -n production |grep LoadBalancer |awk '{print $4}')
 
+while ! [[ $PROD_LB_PUB_IP =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+do
+  echo "Load balancer External IP is in pending state"
+  echo "Waiting for 10 seconds"
+  sleep 10
+  echo "Checking again"
+  PROD_LB_PUB_IP=$(kubectl get svc -n production |grep LoadBalancer |awk '{print $4}')
+  kubectl get svc -n production
+done
+
+echo "LB EXT IP is $PROD_LB_PUB_IP"
+
 sed -i "" "s/LB_IP/$PROD_LB_PUB_IP/g" load-generator/production-load-generator.yaml
 
 kubectl apply -f load-generator/production-load-generator.yaml -n staging
