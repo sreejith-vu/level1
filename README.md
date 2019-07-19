@@ -111,6 +111,7 @@ do
   sleep 10
   echo "Checking again"
   STG_LB_PUB_IP=$(kubectl get svc -n staging |grep LoadBalancer |awk '{print $4}')
+  kubectl get svc -n staging
 done
 
 echo "LB EXT IP is $STG_LB_PUB_IP"
@@ -185,7 +186,8 @@ do
   echo "Waiting for 10 seconds"
   sleep 10
   echo "Checking again"
-  PROD_LB_PUB_IP=$(kubectl get svc -n staging |grep LoadBalancer |awk '{print $4}')
+  PROD_LB_PUB_IP=$(kubectl get svc -n production |grep LoadBalancer |awk '{print $4}')
+  kubectl get svc -n production
 done
 
 echo "LB EXT IP is $PROD_LB_PUB_IP"
