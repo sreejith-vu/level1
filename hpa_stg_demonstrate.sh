@@ -64,10 +64,10 @@ do
         echo "Terminated pods as load is normal. Exiting from scipt"
         exit 0
       fi
-    echo "Next check after 10 sec"
-    sleep 10
-    REPLICA=$(kubectl get hpa -n staging |grep frontend |awk '{print $6}')
-   done
+      echo "Next check after 10 sec"
+      sleep 10
+      REPLICA=$(kubectl get hpa -n staging |grep frontend |awk '{print $6}')
+    done
 
   fi
   echo "Next check after 10 sec"
