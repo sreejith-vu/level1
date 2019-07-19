@@ -102,8 +102,6 @@ kubectl autoscale deployment frontend --cpu-percent=10 --min=1 --max=10 -n stagi
 
 STG_LB_PUB_IP=$(kubectl get svc -n staging |grep LoadBalancer |awk '{print $4}')
 
-echo $STG_LB_PUB_IP
-
 while ! [[ $STG_LB_PUB_IP =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
 do
   echo "Load balancer External IP is in pending state"
