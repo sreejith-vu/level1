@@ -84,11 +84,13 @@ kubectl apply -f load-generator/load-generator.yaml -n staging
 
 Demonstration of autoscaling is written as script.
 * For production - hba_prod_demonstrate.sh
-* For Staging -hba_stg_demonstrate.sh
+* For Staging - hba_stg_demonstrate.sh
 
 Below is also a summary or logic of script.
 
 ```
+## For staging
+
 kubectl apply -f guestbook/redis-master-deployment.yaml -n staging
 kubectl apply -f guestbook/redis-master-service.yaml -n staging
 kubectl apply -f guestbook/redis-slave-deployment.yaml -n staging
@@ -164,6 +166,7 @@ do
   REPLICA=$(kubectl get hpa -n staging |grep frontend |awk '{print $6}')
 done
 
+## For production
 
 kubectl apply -f guestbook/redis-master-deployment.yaml -n production
 kubectl apply -f guestbook/redis-master-service.yaml -n production
